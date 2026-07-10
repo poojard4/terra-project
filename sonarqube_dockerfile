@@ -1,0 +1,18 @@
+#!/bin/bash
+if docker -version a /dev/null; then echo "Docker is already installed."
+else
+echo "Installing docker ...
+curl-s https://raw.githubusercontent.com/jaintpharsha/install/main/docker | sudo bash
+fi
+echo "Create volumes for sonarqube to persist data" docker volume create —name sonarqube_data docker volume create —name sonarqube_logs docker volume create -name sonarqube_extensions
+docker run -d -it -name sonarqube N
+-p 9000:9000 \
+-e SONAR_JDBC_USERNAME-admin \
+-e
+-v sonarqube_data:/opt/sonarqube/data \
+- sonarqube_extensions:/opt/sonarqube/extensions \
+- sonaraube_logs:/opt/sonarqube/logs \
+sonarqube
+echo "SonarQube,
+a default user with Administer System permission is created automatically: "
+echo "Login: admin. Password: admin"
