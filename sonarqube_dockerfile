@@ -1,13 +1,25 @@
 #!/bin/bash
-echo "Create volumes for sonarqube to persist data" docker volume create —name sonarqube_data docker volume create —name sonarqube_logs docker volume create -name sonarqube_extensions
-docker run -d -it -name sonarqube N
--p 9000:9000 \
--e SONAR_JDBC_USERNAME-admin \
--e
--v sonarqube_data:/opt/sonarqube/data \
-- sonarqube_extensions:/opt/sonarqube/extensions \
-- sonaraube_logs:/opt/sonarqube/logs \
-sonarqube
-echo "SonarQube,
-a default user with Administer System permission is created automatically: "
-echo "Login: admin. Password: admin"
+
+echo "Creating Docker volumes for SonarQube..."
+
+docker volume create --name sonarqube_data
+docker volume create --name sonarqube_logs
+docker volume create --name sonarqube_extensions
+
+echo "Starting SonarQube container..."
+
+docker run -d \
+  --name sonarqube \
+  -p 9000:9000 \
+  -e SONAR_JDBC_USERNAME=admin \
+  -v sonarqube_data:/opt/sonarqube/data \
+  -v sonarqube_extensions:/opt/sonarqube/extensions \
+  -v sonarqube_logs:/opt/sonarqube/logs \
+  sonarqube:community
+
+echo "======================================="
+echo "SonarQube is starting..."
+echo "URL: http://localhost:9000"
+echo "Username: admin"
+echo "Password: admin"
+echo "======================================="
