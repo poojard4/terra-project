@@ -1,9 +1,4 @@
 #!/bin/bash
-if docker -version a /dev/null; then echo "Docker is already installed."
-else
-echo "Installing docker ...
-curl-s https://raw.githubusercontent.com/jaintpharsha/install/main/docker | sudo bash
-fi
 echo "Create volumes for sonarqube to persist data" docker volume create —name sonarqube_data docker volume create —name sonarqube_logs docker volume create -name sonarqube_extensions
 docker run -d -it -name sonarqube N
 -p 9000:9000 \
